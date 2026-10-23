@@ -92,3 +92,4 @@ The Checks Catalogue view now uses a light neutral surface system aligned with t
 - `docs/Checks-Catalogue-Visual-Refresh.md` — layout blueprint and interaction design decisions.
 
 Tailwind CSS v4 `dark:` utility behavior is class-driven in `src/index.css`, so operating-system dark preference cannot turn catalogue panels dark while the platform shell remains light. Apply a `.dark` class deliberately at the application root if the platform later enables a global dark theme.
+# secgenie-compliance-ui
