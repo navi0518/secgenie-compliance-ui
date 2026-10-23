@@ -1,0 +1,712 @@
+{
+  "Framework": "CIS",
+  "Name": "CIS Controls v8.0 for AWS",
+  "Version": "8.0",
+  "Provider": "AWS",
+  "Description": "The CIS Amazon Web Services Foundations Benchmark provides prescriptive guidance for configuring security options for a subset of Amazon Web Services with an emphasis on foundational, testable, and architecture agnostic settings.",
+  "Requirements": [
+    {
+      "Id": "CSC-1",
+      "Description": "Inventory and Control of Enterprise Assets",
+      "Checks": [
+        {
+          "check_id": "ec2_ami_public",
+          "name": "Ensure EC2 AMIs Are Not Publicly Shared",
+          "description": "Evaluates Amazon Machine Images (AMIs) to verify that launch permissions are not configured as public, helping prevent unauthorized access to internal disk images.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::Image",
+          "severity": "High"
+        },
+        {
+          "check_id": "ec2_ebs_public_snapshot",
+          "name": "Ensure EBS Snapshots Are Not Publicly Shared",
+          "description": "Evaluates EBS snapshot sharing permissions to identify snapshots that are publicly accessible and could expose copied volume data.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::Snapshot",
+          "severity": "High"
+        },
+        {
+          "check_id": "ecr_repositories_not_publicly_accessible",
+          "name": "Prevent Public Access to ECR Repositories",
+          "description": "Checks ECR repository permissions to identify repositories that allow public access to container images.",
+          "service": "Amazon ECR",
+          "resource_type": "AWS::ECR::Repository",
+          "severity": "High"
+        },
+        {
+          "check_id": "redshift_cluster_public_access",
+          "name": "Prevent Public Access to Amazon Redshift Clusters",
+          "description": "Evaluates the Amazon Redshift cluster against the benchmark objective “Ensure Redshift clusters do not have a public endpoint.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Amazon Redshift",
+          "resource_type": "AWS::Redshift::Cluster",
+          "severity": "High"
+        },
+        {
+          "check_id": "opensearch_service_domains_not_publicly_accessible",
+          "name": "Prevent Public Access to OpenSearch Domains",
+          "description": "Evaluates Amazon OpenSearch domain network and access configuration to identify domains exposed publicly when access should be restricted.",
+          "service": "Amazon OpenSearch Service",
+          "resource_type": "AWS::OpenSearch::Domain",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 1 – Inventory and Control of Enterprise Assets",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Use Prowler to identify exposed or misconfigured cloud resources as part of maintaining an accurate and controlled asset inventory.",
+          "RationaleStatement": "Exposed resources and public snapshots indicate weak control over the asset surface and inventory governance.",
+          "ImpactStatement": "Uncontrolled or publicly exposed assets increase the risk of data breach and unauthorized access.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-2",
+      "Description": "Inventory and Control of Software Assets",
+      "Checks": [
+        {
+          "check_id": "lambda_function_in_vpc",
+          "name": "Attach AWS Lambda Functions to a VPC Where Required",
+          "description": "Checks whether AWS Lambda functions are attached to a VPC when required by the benchmark's workload-isolation control.",
+          "service": "AWS Lambda",
+          "resource_type": "AWS::Lambda::Function",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "eks_cluster_not_publicly_accessible",
+          "name": "Prevent Public Access to EKS Cluster Endpoints",
+          "description": "Checks EKS cluster endpoint access settings to identify public exposure that is not intended by the deployment's access model.",
+          "service": "Amazon EKS",
+          "resource_type": "AWS::EKS::Cluster",
+          "severity": "High"
+        },
+        {
+          "check_id": "ecs_task_definition_no_plaintext_secrets",
+          "name": "Prevent Plaintext Secrets in ECS Task Definitions",
+          "description": "Checks ECS task definitions for secrets supplied as plaintext configuration rather than being retrieved from an approved secrets-management service.",
+          "service": "Amazon ECS",
+          "resource_type": "AWS::ECS::TaskDefinition",
+          "severity": "Critical"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 2 – Inventory and Control of Software Assets",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Map Prowler checks around managed runtimes and workloads to software inventory and control requirements.",
+          "RationaleStatement": "Knowing which workloads are exposed and how they are configured is key to managing software risk.",
+          "ImpactStatement": "Untracked or misconfigured workloads can bypass patching, monitoring and data protection controls.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-3",
+      "Description": "Data Protection",
+      "Checks": [
+        {
+          "check_id": "s3_bucket_public_access",
+          "name": "Prevent Unintended Public Access to S3 Buckets",
+          "description": "Evaluates S3 access configuration to identify buckets with unintended public access paths.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        },
+        {
+          "check_id": "s3_bucket_policy_public_write_access",
+          "name": "Prevent Public Write Access Through S3 Bucket Policies",
+          "description": "Evaluates S3 bucket policies for public write permissions that could allow untrusted principals to modify or inject data.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::IAM::Policy",
+          "severity": "Critical"
+        },
+        {
+          "check_id": "s3_bucket_public_access_blocked",
+          "name": "Block Public Access to S3 Buckets",
+          "description": "Checks whether S3 bucket public access is effectively blocked by the applicable public-access settings.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        },
+        {
+          "check_id": "s3_bucket_server_side_encryption_enabled",
+          "name": "Enable Server-Side Encryption for S3 Buckets",
+          "description": "Checks whether S3 objects are protected by server-side encryption at rest.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        },
+        {
+          "check_id": "kms_key_rotation_enabled",
+          "name": "Enable KMS Key Rotation",
+          "description": "Checks AWS KMS key-rotation configuration to identify keys for which rotation is not enabled where applicable.",
+          "service": "AWS KMS",
+          "resource_type": "AWS::KMS::Key",
+          "severity": "High"
+        },
+        {
+          "check_id": "rds_cluster_encrypted",
+          "name": "Encrypt Amazon RDS Clusters at Rest",
+          "description": "Checks whether Amazon RDS cluster storage is encrypted at rest to protect database data and underlying storage.",
+          "service": "Amazon RDS",
+          "resource_type": "AWS::RDS::DBCluster",
+          "severity": "High"
+        },
+        {
+          "check_id": "ec2_ebs_encryption_by_default",
+          "name": "Enable EBS Encryption by Default",
+          "description": "Checks whether EBS encryption by default is enabled in the relevant Region, reducing the chance that newly created EBS volumes are left unencrypted.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::EbsEncryptionByDefault",
+          "severity": "High"
+        },
+        {
+          "check_id": "sns_topics_not_publicly_accessible",
+          "name": "Prevent Public Access to Amazon SNS Topics",
+          "description": "Evaluates the Amazon SNS topic against the benchmark objective “Ensure SNS topics do not allow global send or subscribe.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Amazon SNS",
+          "resource_type": "AWS::SNS::Topic",
+          "severity": "High"
+        },
+        {
+          "check_id": "sqs_queues_not_publicly_accessible",
+          "name": "Prevent Public Access to Amazon SQS Queues",
+          "description": "Evaluates Amazon SQS queue resource policies to identify queues that can be accessed by unintended public principals.",
+          "service": "Amazon SQS",
+          "resource_type": "AWS::SQS::Queue",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 3 – Data Protection",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Use Prowler checks to ensure encryption at rest, control of public access and secure key management.",
+          "RationaleStatement": "CIS Controls v8 requires strong safeguards around sensitive data in storage and in transit.",
+          "ImpactStatement": "Improperly protected or publicly accessible data stores can lead directly to regulatory impact and breach disclosure.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-4",
+      "Description": "Secure Configuration of Enterprise Assets and Software",
+      "Checks": [
+        {
+          "check_id": "config_recorder_all_regions_enabled",
+          "name": "Enable AWS Config Recording Across Regions",
+          "description": "Evaluates the AWS Config configuration recorder against the benchmark objective “Ensure AWS Config is enabled in all regions.” It helps identify configuration gaps that could weaken configuration visibility and drift detection.",
+          "service": "AWS Config",
+          "resource_type": "AWS::Config::ConfigurationRecorder",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "config_recorder_enabled",
+          "name": "Enable the AWS Config Recorder",
+          "description": "Checks whether AWS Config recording is enabled so supported resource configuration changes can be inventoried and assessed.",
+          "service": "AWS Config",
+          "resource_type": "AWS::Config::ConfigurationRecorder",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "securityhub_enabled",
+          "name": "Enable AWS Security Hub",
+          "description": "Checks whether AWS Security Hub is enabled in the applicable account and Region to aggregate and assess security findings against supported standards.",
+          "service": "AWS Security Hub",
+          "resource_type": "AWS::SecurityHub::Hub",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudtrail_multi_region_enabled",
+          "name": "Enable Multi-Region CloudTrail Logging",
+          "description": "Evaluates the CloudTrail trail against the benchmark objective “Ensure CloudTrail is enabled in all regions.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "CloudTrail",
+          "resource_type": "AWS::CloudTrail::Trail",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudtrail_logs_s3_bucket_is_not_publicly_accessible",
+          "name": "Prevent Public Access to the CloudTrail Log Bucket",
+          "description": "Evaluates the Amazon S3 bucket against the benchmark objective “Ensure the S3 bucket CloudTrail logs to is not publicly accessible.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 4 – Secure Configuration",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Map AWS Config, CloudTrail and Security Hub related checks to CIS v8 secure configuration requirements.",
+          "RationaleStatement": "Baseline configurations and configuration monitoring are central to CIS Controls v8.",
+          "ImpactStatement": "Without secure baselines and continuous tracking, configuration drift and insecure changes go undetected.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-5",
+      "Description": "Account Management (Access Control Management in some summaries)",
+      "Checks": [
+        {
+          "check_id": "iam_administrator_access_with_mfa",
+          "name": "Require MFA for Administrative IAM Access",
+          "description": "Checks whether IAM principals with administrative access are required to use multi-factor authentication, adding protection to highly privileged access.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_customer_attached_policy_no_administrative_privileges",
+          "name": "Prevent Customer-Managed Administrative Policies from Being Attached",
+          "description": "Checks customer-managed IAM policy permissions for full (*:*) administrative privileges and identifies overly broad permissions that can give principals unrestricted control over AWS resources.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Policy",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_policy_allows_privilege_escalation",
+          "name": "Identify IAM Policies That Allow Privilege Escalation",
+          "description": "Evaluates IAM policy permissions for combinations that could enable a principal to elevate privileges beyond its intended authorization.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Policy",
+          "severity": "Critical"
+        },
+        {
+          "check_id": "iam_no_custom_policy_permissive_role_assumption",
+          "name": "Restrict Overly Permissive Custom Role-Assumption Policies",
+          "description": "Evaluates customer-managed IAM policies for overly permissive role-assumption permissions that could enable unintended cross-role or cross-account access.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Policy",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 5 – Account / Access Control Management",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Prowler IAM policy and admin privilege checks reflect CIS v8 requirements for tightly managed accounts and roles.",
+          "RationaleStatement": "Excessive privileges and poor policy hygiene are high-value attack paths.",
+          "ImpactStatement": "Privilege escalation or over-permissive policies can allow full compromise from a single account.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-6",
+      "Description": "Access Control / Identity Management",
+      "Checks": [
+        {
+          "check_id": "iam_root_mfa_enabled",
+          "name": "Require MFA for the AWS Root User",
+          "description": "Checks whether MFA protects the AWS root identity, adding a second authentication factor to the account's most privileged identity.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_no_root_access_key",
+          "name": "Ensure the AWS Root User Has No Access Keys",
+          "description": "Checks whether the AWS root identity has active programmatic access keys, which can provide highly privileged access outside normal role-based controls.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_avoid_root_usage",
+          "name": "Avoid Using the AWS Root User for Routine Tasks",
+          "description": "Evaluates the AWS account root identity and IAM account settings against the benchmark objective “Avoid the use of the 'root' account.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_mfa_enabled_console_access",
+          "name": "Require MFA for IAM Users with Console Access",
+          "description": "Checks whether IAM users who can sign in to the console are protected by multi-factor authentication.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_password_policy",
+          "name": "Enforce an AWS IAM Account Password Policy",
+          "description": "Evaluates the AWS account's IAM password policy settings to identify missing or weak requirements for password length, complexity, reuse, or expiration.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "iam_password_policy_uppercase",
+          "name": "Require Uppercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one uppercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "iam_password_policy_lowercase",
+          "name": "Require Lowercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one lowercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "iam_password_policy_symbol",
+          "name": "Require Symbols in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one symbol in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "iam_password_policy_number",
+          "name": "Require Numbers in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one numeric character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "iam_rotate_access_key_90_days",
+          "name": "Rotate IAM Access Keys Within 90 Days",
+          "description": "Evaluates the IAM user against the benchmark objective “Ensure access keys are rotated every 90 days or less.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_accesskey_unused",
+          "name": "Disable or Remove Unused IAM Access Keys",
+          "description": "Checks IAM access-key activity to identify keys that have not been used within the applicable period and should be disabled or removed after validation.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 6 – Identity Management",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Use Prowler IAM checks to cover MFA, password policy strength, key rotation and unused credentials.",
+          "RationaleStatement": "CIS v8 emphasises strong authentication, controlled identity lifecycle and secret management.",
+          "ImpactStatement": "Weak identity controls directly increase account takeover and unauthorized access risk.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-7",
+      "Description": "Continuous Vulnerability Management",
+      "Checks": [
+        {
+          "check_id": "inspector2_enabled",
+          "name": "Enable Amazon Inspector",
+          "description": "Checks whether Amazon Inspector is enabled for the applicable account and Region to support automated discovery and assessment of supported workloads.",
+          "service": "Amazon Inspector",
+          "resource_type": "AWS::Inspector2::Coverage",
+          "severity": "High"
+        },
+        {
+          "check_id": "guardduty_is_enabled",
+          "name": "Enable Amazon GuardDuty",
+          "description": "Checks whether Amazon GuardDuty is enabled in the applicable AWS account and Region so supported threat-detection findings can be generated.",
+          "service": "Amazon GuardDuty",
+          "resource_type": "AWS::GuardDuty::Detector",
+          "severity": "High"
+        },
+        {
+          "check_id": "guardduty_no_high_severity_findings",
+          "name": "Resolve High-Severity Amazon GuardDuty Findings",
+          "description": "Surfaces unresolved high-severity GuardDuty findings that may indicate active threats or suspicious behavior requiring investigation.",
+          "service": "Amazon GuardDuty",
+          "resource_type": "AWS::GuardDuty::Detector",
+          "severity": "Critical"
+        },
+        {
+          "check_id": "securityhub_enabled",
+          "name": "Enable AWS Security Hub",
+          "description": "Checks whether AWS Security Hub is enabled in the applicable account and Region to aggregate and assess security findings against supported standards.",
+          "service": "AWS Security Hub",
+          "resource_type": "AWS::SecurityHub::Hub",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 7 – Continuous Vulnerability Management",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Map AWS-native detection tooling checks (GuardDuty, Inspector, Security Hub) to CIS v8 vulnerability management objectives.",
+          "RationaleStatement": "Continuous discovery of misconfigurations, findings and vulnerabilities is a CIS v8 requirement.",
+          "ImpactStatement": "Missing or disabled detection services reduce the organisation’s ability to track and remediate emerging issues.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-8",
+      "Description": "Audit Log Management",
+      "Checks": [
+        {
+          "check_id": "cloudtrail_multi_region_enabled",
+          "name": "Enable Multi-Region CloudTrail Logging",
+          "description": "Evaluates the CloudTrail trail against the benchmark objective “Ensure CloudTrail is enabled in all regions.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "CloudTrail",
+          "resource_type": "AWS::CloudTrail::Trail",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudtrail_log_file_validation_enabled",
+          "name": "Enable CloudTrail Log File Validation",
+          "description": "Evaluates the CloudTrail trail against the benchmark objective “Ensure CloudTrail log file validation is enabled.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "CloudTrail",
+          "resource_type": "AWS::CloudTrail::Trail",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudtrail_logs_s3_bucket_is_not_publicly_accessible",
+          "name": "Prevent Public Access to the CloudTrail Log Bucket",
+          "description": "Evaluates the Amazon S3 bucket against the benchmark objective “Ensure the S3 bucket CloudTrail logs to is not publicly accessible.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        },
+        {
+          "check_id": "vpc_flow_logs_enabled",
+          "name": "Enable VPC Flow Logs",
+          "description": "Checks whether VPC Flow Logs are enabled to capture network traffic metadata for investigation and monitoring.",
+          "service": "Amazon VPC",
+          "resource_type": "AWS::EC2::FlowLog",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudwatch_log_group_encryption_at_rest_enabled",
+          "name": "Encrypt CloudWatch Log Groups at Rest",
+          "description": "Checks whether log data is encrypted at rest, helping protect operational and security telemetry from unauthorized disclosure.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::LogGroup",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 8 – Audit Log Management",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Use CloudTrail, VPC Flow Logs and CloudWatch related checks to satisfy CIS v8 audit logging guidance.",
+          "RationaleStatement": "Centralised, tamper-resistant logging is critical for detection, forensics and compliance.",
+          "ImpactStatement": "Insufficient or unprotected logs make incident reconstruction and regulatory reporting difficult or impossible.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-12",
+      "Description": "Network Infrastructure Management",
+      "Checks": [
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_any_port",
+          "name": "Prevent Security Groups from Allowing Any Port from the Internet",
+          "description": "Evaluates EC2 security-group inbound rules for unrestricted internet access to arbitrary ports, which can expose services that were intended to be reachable only from trusted networks.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "Critical"
+        },
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_22",
+          "name": "Restrict Internet Ingress to SSH on Port 22",
+          "description": "Checks whether EC2 security groups permit SSH (TCP port 22) from the public internet; restrict this access to approved administration sources.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "High"
+        },
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_3389",
+          "name": "Restrict Internet Ingress to RDP on Port 3389",
+          "description": "Checks whether EC2 security groups permit Remote Desktop Protocol (TCP port 3389) from the public internet, reducing the risk of direct remote-administration exposure.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "High"
+        },
+        {
+          "check_id": "ec2_securitygroup_restricted_ingress",
+          "name": "Restrict Security Group Ingress to Trusted Sources",
+          "description": "Evaluates EC2 security-group ingress rules to verify that inbound traffic is limited to required ports and trusted source ranges.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "vpc_flow_logs_enabled",
+          "name": "Enable VPC Flow Logs",
+          "description": "Checks whether VPC Flow Logs are enabled to capture network traffic metadata for investigation and monitoring.",
+          "service": "Amazon VPC",
+          "resource_type": "AWS::EC2::FlowLog",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 12 – Network Infrastructure Management",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Use security-group and VPC-related checks to map to CIS v8 network hardening requirements.",
+          "RationaleStatement": "CIS v8 expects controlled remote administration and restricted ingress/egress on networks.",
+          "ImpactStatement": "Overly permissive security groups and missing flow logs increase lateral movement and exfiltration risk.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-13",
+      "Description": "Network Monitoring and Defense",
+      "Checks": [
+        {
+          "check_id": "guardduty_is_enabled",
+          "name": "Enable Amazon GuardDuty",
+          "description": "Checks whether Amazon GuardDuty is enabled in the applicable AWS account and Region so supported threat-detection findings can be generated.",
+          "service": "Amazon GuardDuty",
+          "resource_type": "AWS::GuardDuty::Detector",
+          "severity": "High"
+        },
+        {
+          "check_id": "guardduty_no_high_severity_findings",
+          "name": "Resolve High-Severity Amazon GuardDuty Findings",
+          "description": "Surfaces unresolved high-severity GuardDuty findings that may indicate active threats or suspicious behavior requiring investigation.",
+          "service": "Amazon GuardDuty",
+          "resource_type": "AWS::GuardDuty::Detector",
+          "severity": "Critical"
+        },
+        {
+          "check_id": "waf_webacl_global_logging_enabled",
+          "name": "Enable Logging for AWS WAF Web ACLs",
+          "description": "Checks whether AWS WAF web ACL logging is configured so web request security events are available for detection and investigation.",
+          "service": "AWS WAF",
+          "resource_type": "AWS::WAFv2::WebACL",
+          "severity": "Medium"
+        },
+        {
+          "check_id": "cloudfront_distributions_waf_enabled",
+          "name": "Protect CloudFront Distributions with AWS WAF",
+          "description": "Checks whether CloudFront distributions are associated with an AWS WAF web ACL to add an application-layer protection control at the edge.",
+          "service": "CloudFront",
+          "resource_type": "AWS::CloudFront::Distribution",
+          "severity": "Medium"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 13 – Network Monitoring and Defense",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Use GuardDuty and WAF-related checks to support CIS v8 expectations for network monitoring and defensive controls.",
+          "RationaleStatement": "Attack detection and web-application defence at the network edge are part of CIS Controls v8.",
+          "ImpactStatement": "Lack of network-level monitoring increases mean-time-to-detect and overall breach impact.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    },
+    {
+      "Id": "CSC-17",
+      "Description": "Incident Response Management",
+      "Checks": [
+        {
+          "check_id": "guardduty_is_enabled",
+          "name": "Enable Amazon GuardDuty",
+          "description": "Checks whether Amazon GuardDuty is enabled in the applicable AWS account and Region so supported threat-detection findings can be generated.",
+          "service": "Amazon GuardDuty",
+          "resource_type": "AWS::GuardDuty::Detector",
+          "severity": "High"
+        },
+        {
+          "check_id": "securityhub_enabled",
+          "name": "Enable AWS Security Hub",
+          "description": "Checks whether AWS Security Hub is enabled in the applicable account and Region to aggregate and assess security findings against supported standards.",
+          "service": "AWS Security Hub",
+          "resource_type": "AWS::SecurityHub::Hub",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudtrail_multi_region_enabled",
+          "name": "Enable Multi-Region CloudTrail Logging",
+          "description": "Evaluates the CloudTrail trail against the benchmark objective “Ensure CloudTrail is enabled in all regions.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "CloudTrail",
+          "resource_type": "AWS::CloudTrail::Trail",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudtrail_log_file_validation_enabled",
+          "name": "Enable CloudTrail Log File Validation",
+          "description": "Evaluates the CloudTrail trail against the benchmark objective “Ensure CloudTrail log file validation is enabled.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "CloudTrail",
+          "resource_type": "AWS::CloudTrail::Trail",
+          "severity": "High"
+        }
+      ],
+      "Attributes": [
+        {
+          "Section": "CSC 17 – Incident Response Management",
+          "Profile": "Level 1",
+          "AssessmentStatus": "Automated",
+          "Description": "Tie key Prowler checks to the CIS v8 requirement for detection, evidence and integration with IR processes.",
+          "RationaleStatement": "Having the right logs and detection signals is a prerequisite for any functioning incident response capability.",
+          "ImpactStatement": "If logs and findings are missing, incident response becomes guesswork and regulatory exposure increases.",
+          "RemediationProcedure": "Perform the following to establish security contact information: **From Console:** 1. Click on your account name at the top right corner of the console. 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Enter contact information in the `Security` section **From Command Line:** Run the following command with the following input parameters: --email-address, --name, and --phone-number. ``` aws account put-alternate-contact --alternate-contact-type SECURITY  ```  **Note:** Consider specifying an internal email distribution list to ensure emails are regularly monitored by more than one individual.",
+          "AuditProcedure": "Perform the following to determine if security contact information is present: **From Console:** 1. Click on your account name at the top right corner of the console 2. From the drop-down menu Click `My Account`  3. Scroll down to the `Alternate Contacts` section 4. Ensure contact information is specified in the `Security` section **From Command Line:** 1. Run the following command: ```  aws account get-alternate-contact --alternate-contact-type SECURITY ``` 2. Ensure proper contact information is specified for the `Security` contact.",
+          "AdditionalInformation": "",
+          "References": "",
+          "DefaultValue": ""
+        }
+      ]
+    }
+  ]
+}

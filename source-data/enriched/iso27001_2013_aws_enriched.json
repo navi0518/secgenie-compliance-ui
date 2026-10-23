@@ -1,0 +1,1982 @@
+{
+  "Framework": "ISO27001",
+  "Name": "ISO/IEC 27001 Information Security Management Standard 2013",
+  "Version": "2013",
+  "Provider": "AWS",
+  "Description": "ISO (the International Organization for Standardization) and IEC (the International Electrotechnical Commission) form the specialized system for worldwide standardization. National bodies that are members of ISO or IEC participate in the development of International Standards through technical committees established by the respective organization to deal with particular fields of technical activity. ISO and IEC technical committees collaborate in fields of mutual interest. Other international organizations, governmental and non-governmental, in liaison with ISO and IEC, also take part in the work.",
+  "Requirements": [
+    {
+      "Id": "A.10.1.A",
+      "Description": "Setup Encryption at rest for RDS instances",
+      "Name": "Cryptographic Controls",
+      "Attributes": [
+        {
+          "Category": "A.10 Cryptography",
+          "Objetive_ID": "A.10.1.A",
+          "Objetive_Name": "Cryptographic Controls",
+          "Check_Summary": "Setup Encryption at rest for RDS instances"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "rds_instance_storage_encrypted",
+          "name": "Encrypt Amazon RDS Instance Storage",
+          "description": "Checks whether Amazon RDS instance storage is encrypted at rest to protect data stored on the underlying database volumes.",
+          "service": "Amazon RDS",
+          "resource_type": "AWS::RDS::DBInstance",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.10.1.B",
+      "Description": "Detect use of insecure ciphers on ELBs",
+      "Name": "Cryptographic Controls",
+      "Attributes": [
+        {
+          "Category": "A.10 Cryptography",
+          "Objetive_ID": "A.10.1.B",
+          "Objetive_Name": "Cryptographic Controls",
+          "Check_Summary": "Detect use of insecure ciphers on ELBs"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "elb_insecure_ssl_ciphers",
+          "name": "Disable Insecure SSL/TLS Ciphers on Classic Load Balancers",
+          "description": "Evaluates the Elastic Load Balancing load balancer against the benchmark objective “Detect use of insecure ciphers on ELBs.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Elastic Load Balancing",
+          "resource_type": "AWS::ElasticLoadBalancing::LoadBalancer",
+          "severity": "High"
+        },
+        {
+          "check_id": "elbv2_insecure_ssl_ciphers",
+          "name": "Disable Insecure SSL/TLS Ciphers on Application and Network Load Balancers",
+          "description": "Evaluates the Elastic Load Balancing v2 load balancer against the benchmark objective “Detect use of insecure ciphers on ELBs.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Elastic Load Balancing v2",
+          "resource_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+          "severity": "High"
+        },
+        {
+          "check_id": "elbv2_listener_pqc_tls_enabled",
+          "name": "Use an Approved Post-Quantum TLS Policy on Load Balancer Listeners",
+          "description": "Evaluates Elastic Load Balancing v2 listener TLS policies against the approved post-quantum cryptography policy, identifying listeners that do not meet the configured allowlist.",
+          "service": "Elastic Load Balancing v2",
+          "resource_type": "AWS::ElasticLoadBalancingV2::Listener",
+          "severity": "High"
+        },
+        {
+          "check_id": "cloudfront_distributions_pqc_tls_enabled",
+          "name": "Use an Approved Post-Quantum TLS Policy for CloudFront Distributions",
+          "description": "Checks CloudFront viewer TLS configuration against the approved post-quantum TLS policy; a TLS 1.2 policy may not satisfy a post-quantum allowlist.",
+          "service": "CloudFront",
+          "resource_type": "AWS::CloudFront::Distribution",
+          "severity": "High"
+        },
+        {
+          "check_id": "apigateway_domain_name_pqc_tls_enabled",
+          "name": "Use an Approved Post-Quantum TLS Policy for API Gateway Domains",
+          "description": "Checks whether API Gateway custom domains use a TLS configuration approved by the organization's post-quantum cryptography policy.",
+          "service": "API Gateway",
+          "resource_type": "AWS::ApiGateway::DomainName",
+          "severity": "High"
+        },
+        {
+          "check_id": "transfer_server_pqc_ssh_kex_enabled",
+          "name": "Use Approved Post-Quantum SSH Key Exchange for Transfer Family",
+          "description": "Checks AWS Transfer Family server SSH key-exchange configuration against the approved post-quantum cryptography policy.",
+          "service": "AWS Transfer Family",
+          "resource_type": "AWS::Transfer::Server",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.10.1.C",
+      "Description": "Detect Customer Master Keys (CMKs) scheduled for deletion",
+      "Name": "Cryptographic Controls",
+      "Attributes": [
+        {
+          "Category": "A.10 Cryptography",
+          "Objetive_ID": "A.10.1.C",
+          "Objetive_Name": "Cryptographic Controls",
+          "Check_Summary": "Detect Customer Master Keys (CMKs) scheduled for deletion"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_disable_or_scheduled_deletion_of_kms_cmk",
+          "name": "Alert on KMS Key Disablement or Scheduled Deletion",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for disabling or scheduled deletion of customer created CMKs.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.A",
+      "Description": "Ensure a log metric filter and alarm exist for VPC changes",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.A",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for VPC changes"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_changes_to_vpcs_alarm_configured",
+          "name": "Alert on VPC Configuration Changes",
+          "description": "Evaluates the CloudWatch alarm against the benchmark objective “Ensure a log metric filter and alarm exist for VPC changes.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::CloudWatch::Alarm",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.B",
+      "Description": "Ensure a log metric filter and alarm exist for route table changes",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.B",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for route table changes"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_changes_to_network_route_tables_alarm_configured",
+          "name": "Alert on Network Route Table Changes",
+          "description": "Evaluates the CloudWatch alarm against the benchmark objective “Ensure a log metric filter and alarm exist for route table changes.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::CloudWatch::Alarm",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.C",
+      "Description": "Ensure a log metric filter and alarm exist for changes to network gateways",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.C",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for changes to network gateways"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_changes_to_network_gateways_alarm_configured",
+          "name": "Alert on Network Gateway Changes",
+          "description": "Evaluates the CloudWatch alarm against the benchmark objective “Ensure a log metric filter and alarm exist for changes to network gateways.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::CloudWatch::Alarm",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.D",
+      "Description": "Ensure a log metric filter and alarm exist for changes to Network Access Control Lists (NACL)",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.D",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for changes to Network Access Control Lists (NACL)"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_changes_to_network_acls_alarm_configured",
+          "name": "Alert on Network ACL Changes",
+          "description": "Evaluates the CloudWatch alarm against the benchmark objective “Ensure a log metric filter and alarm exist for changes to Network Access Control Lists (NACL).” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::CloudWatch::Alarm",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.E",
+      "Description": "Ensure a log metric filter and alarm exist for security group changes",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.E",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for security group changes"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_security_group_changes",
+          "name": "Monitor Security Group Changes",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for security group changes.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.F",
+      "Description": "Ensure a log metric filter and alarm exist for AWS Config configuration changes",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.F",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for AWS Config configuration changes"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_and_alarm_for_aws_config_configuration_changes_enabled",
+          "name": "Alert on AWS Config Configuration Changes",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for AWS Config configuration changes.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.G",
+      "Description": "Ensure a log metric filter and alarm exist for S3 bucket policy changes",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.G",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for S3 bucket policy changes"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_for_s3_bucket_policy_changes",
+          "name": "Monitor S3 Bucket Policy Changes",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for S3 bucket policy changes.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.H",
+      "Description": "Ensure a log metric filter and alarm exist for disabling or scheduled deletion of customer created CMKs",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.H",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for disabling or scheduled deletion of customer created CMKs"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_disable_or_scheduled_deletion_of_kms_cmk",
+          "name": "Alert on KMS Key Disablement or Scheduled Deletion",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for disabling or scheduled deletion of customer created CMKs.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.I",
+      "Description": "Ensure a log metric filter and alarm exist for AWS Management Console authentication failures",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.I",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for AWS Management Console authentication failures"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_authentication_failures",
+          "name": "Monitor AWS Console Authentication Failures",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for AWS Management Console authentication failures.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.J",
+      "Description": "Ensure a log metric filter and alarm exist for CloudTrail configuration changes",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.J",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for CloudTrail configuration changes"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_and_alarm_for_cloudtrail_configuration_changes_enabled",
+          "name": "Alert on CloudTrail Configuration Changes",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for CloudTrail configuration changes.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.K",
+      "Description": "Ensure a log metric filter and alarm exist for IAM policy changes",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.K",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for IAM policy changes"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_policy_changes",
+          "name": "Monitor IAM Policy Changes",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for IAM policy changes.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.L",
+      "Description": "Ensure a log metric filter and alarm exist for usage of root account",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.L",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for usage of root account"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_root_usage",
+          "name": "Monitor Use of the AWS Root Account",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for usage of root account.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.M",
+      "Description": "Ensure a log metric filter and alarm exist for Management Console sign-in without MFA",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.M",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for Management Console sign-in without MFA"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_sign_in_without_mfa",
+          "name": "Monitor Console Sign-Ins Without MFA",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for Management Console sign-in without MFA.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.N",
+      "Description": "Ensure a log metric filter and alarm exist for unauthorized API calls",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.N",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure a log metric filter and alarm exist for unauthorized API calls"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudwatch_log_metric_filter_unauthorized_api_calls",
+          "name": "Monitor Unauthorized AWS API Calls",
+          "description": "Evaluates the CloudWatch Logs metric filter and alarm against the benchmark objective “Ensure a log metric filter and alarm exist for unauthorized API calls.” It helps identify configuration gaps that could weaken security monitoring and operational detection.",
+          "service": "Amazon CloudWatch",
+          "resource_type": "AWS::Logs::MetricFilter",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.O",
+      "Description": "Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.O",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudtrail_logs_s3_bucket_access_logging_enabled",
+          "name": "Enable Access Logging on the CloudTrail Log Bucket",
+          "description": "Evaluates the Amazon S3 bucket against the benchmark objective “Ensure that server access logging is enabled on the CloudTrail S3 bucket.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.P",
+      "Description": "Ensure AWS Config is enabled in all regions",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.P",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure AWS Config is enabled in all regions"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "config_recorder_all_regions_enabled",
+          "name": "Enable AWS Config Recording Across Regions",
+          "description": "Evaluates the AWS Config configuration recorder against the benchmark objective “Ensure AWS Config is enabled in all regions.” It helps identify configuration gaps that could weaken configuration visibility and drift detection.",
+          "service": "AWS Config",
+          "resource_type": "AWS::Config::ConfigurationRecorder",
+          "severity": "Medium"
+        }
+      ],
+      "ConfigRequirements": [
+        {
+          "Check": "config_recorder_all_regions_enabled",
+          "ConfigKey": "mute_non_default_regions",
+          "Operator": "eq",
+          "Value": false
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.Q",
+      "Description": "Ensure CloudTrail trails are integrated with CloudWatch Logs",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.Q",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure CloudTrail trails are integrated with CloudWatch Logs"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudtrail_cloudwatch_logging_enabled",
+          "name": "Send CloudTrail Events to CloudWatch Logs",
+          "description": "Evaluates the CloudTrail trail against the benchmark objective “Ensure CloudTrail trails are integrated with CloudWatch Logs.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "CloudTrail",
+          "resource_type": "AWS::CloudTrail::Trail",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.R",
+      "Description": "Ensure VPC flow logging is enabled in all VPCs",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.R",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure VPC flow logging is enabled in all VPCs"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "vpc_flow_logs_enabled",
+          "name": "Enable VPC Flow Logs",
+          "description": "Checks whether VPC Flow Logs are enabled to capture network traffic metadata for investigation and monitoring.",
+          "service": "Amazon VPC",
+          "resource_type": "AWS::EC2::FlowLog",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.S",
+      "Description": "Ensure the S3 bucket CloudTrail logs to is not publicly accessible",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.S",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure the S3 bucket CloudTrail logs to is not publicly accessible"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudtrail_logs_s3_bucket_is_not_publicly_accessible",
+          "name": "Prevent Public Access to the CloudTrail Log Bucket",
+          "description": "Evaluates the Amazon S3 bucket against the benchmark objective “Ensure the S3 bucket CloudTrail logs to is not publicly accessible.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.4.T",
+      "Description": "Ensure CloudTrail is enabled in all regions",
+      "Name": "Logging and Monitoring",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.4.T",
+          "Objetive_Name": "Logging and Monitoring",
+          "Check_Summary": "Ensure CloudTrail is enabled in all regions"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudtrail_multi_region_enabled",
+          "name": "Enable Multi-Region CloudTrail Logging",
+          "description": "Evaluates the CloudTrail trail against the benchmark objective “Ensure CloudTrail is enabled in all regions.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "CloudTrail",
+          "resource_type": "AWS::CloudTrail::Trail",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.A",
+      "Description": "Ensure the default security group of every VPC restricts all traffic",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.A",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure the default security group of every VPC restricts all traffic"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_securitygroup_default_restrict_traffic",
+          "name": "Restrict All Traffic in Default Security Groups",
+          "description": "Evaluates the EC2 security group against the benchmark objective “Ensure the default security group of every VPC restricts all traffic.” It helps identify configuration gaps that could weaken compute hardening and network exposure.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.B",
+      "Description": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.B",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_3389",
+          "name": "Prevent Public RDP Access Through Security Groups",
+          "description": "Evaluates the EC2 security group against the benchmark objective “Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389.” It helps identify configuration gaps that could weaken compute hardening and network exposure.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.C",
+      "Description": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 22",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.C",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 22"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22",
+          "name": "Prevent Public SSH Access Through Security Groups",
+          "description": "Evaluates the EC2 security group against the benchmark objective “Ensure no security groups allow ingress from 0.0.0.0/0 to port 22.” It helps identify configuration gaps that could weaken compute hardening and network exposure.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.D",
+      "Description": "Check for publicly shared AMIs",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.D",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Check for publicly shared AMIs"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_ami_public",
+          "name": "Ensure EC2 AMIs Are Not Publicly Shared",
+          "description": "Evaluates Amazon Machine Images (AMIs) to verify that launch permissions are not configured as public, helping prevent unauthorized access to internal disk images.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::Image",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.E",
+      "Description": "Ensure EBS snapshots are not publicly accessible",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.E",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure EBS snapshots are not publicly accessible"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_ebs_public_snapshot",
+          "name": "Ensure EBS Snapshots Are Not Publicly Shared",
+          "description": "Evaluates EBS snapshot sharing permissions to identify snapshots that are publicly accessible and could expose copied volume data.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::Snapshot",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.F",
+      "Description": "Ensure SNS topics do not allow global send or subscribe",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.F",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure SNS topics do not allow global send or subscribe"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "sns_topics_not_publicly_accessible",
+          "name": "Prevent Public Access to Amazon SNS Topics",
+          "description": "Evaluates the Amazon SNS topic against the benchmark objective “Ensure SNS topics do not allow global send or subscribe.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Amazon SNS",
+          "resource_type": "AWS::SNS::Topic",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.G",
+      "Description": "Ensure Redshift clusters do not have a public endpoint",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.G",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure Redshift clusters do not have a public endpoint"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "redshift_cluster_public_access",
+          "name": "Prevent Public Access to Amazon Redshift Clusters",
+          "description": "Evaluates the Amazon Redshift cluster against the benchmark objective “Ensure Redshift clusters do not have a public endpoint.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Amazon Redshift",
+          "resource_type": "AWS::Redshift::Cluster",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.H",
+      "Description": "Ensure RDS snapshots are not publicly accessible",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.H",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure RDS snapshots are not publicly accessible"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "rds_snapshots_public_access",
+          "name": "Prevent Public Access to RDS Snapshots",
+          "description": "Evaluates the Amazon RDS snapshot against the benchmark objective “Ensure RDS snapshots are not publicly accessible.” It helps identify configuration gaps that could weaken database confidentiality and availability.",
+          "service": "Amazon RDS",
+          "resource_type": "AWS::RDS::DBSnapshot",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.I",
+      "Description": "Ensure RDS instances are not accessible to the world.",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.I",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure RDS instances are not accessible to the world."
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "rds_instance_no_public_access",
+          "name": "Prevent Public Access to Amazon RDS Instances",
+          "description": "Checks whether Amazon RDS instances are configured without public accessibility, reducing direct internet exposure of database endpoints.",
+          "service": "Amazon RDS",
+          "resource_type": "AWS::RDS::DBInstance",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.12.6.J",
+      "Description": "Ensure the S3 bucket CloudTrail logs to is not publicly accessible",
+      "Name": "Technical Vulnerability Management",
+      "Attributes": [
+        {
+          "Category": "A.12 Operations Security",
+          "Objetive_ID": "A.12.6.J",
+          "Objetive_Name": "Technical Vulnerability Management",
+          "Check_Summary": "Ensure the S3 bucket CloudTrail logs to is not publicly accessible"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "cloudtrail_logs_s3_bucket_is_not_publicly_accessible",
+          "name": "Prevent Public Access to the CloudTrail Log Bucket",
+          "description": "Evaluates the Amazon S3 bucket against the benchmark objective “Ensure the S3 bucket CloudTrail logs to is not publicly accessible.” It helps identify configuration gaps that could weaken auditability and security-event visibility.",
+          "service": "Amazon S3",
+          "resource_type": "AWS::S3::Bucket",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.A",
+      "Description": "Ensure the default security group of every VPC restricts all traffic",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.A",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure the default security group of every VPC restricts all traffic"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_securitygroup_default_restrict_traffic",
+          "name": "Restrict All Traffic in Default Security Groups",
+          "description": "Evaluates the EC2 security group against the benchmark objective “Ensure the default security group of every VPC restricts all traffic.” It helps identify configuration gaps that could weaken compute hardening and network exposure.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.B",
+      "Description": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.B",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_3389",
+          "name": "Prevent Public RDP Access Through Security Groups",
+          "description": "Evaluates the EC2 security group against the benchmark objective “Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389.” It helps identify configuration gaps that could weaken compute hardening and network exposure.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.C",
+      "Description": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 22",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.C",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure no security groups allow ingress from 0.0.0.0/0 to port 22"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22",
+          "name": "Prevent Public SSH Access Through Security Groups",
+          "description": "Evaluates the EC2 security group against the benchmark objective “Ensure no security groups allow ingress from 0.0.0.0/0 to port 22.” It helps identify configuration gaps that could weaken compute hardening and network exposure.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::SecurityGroup",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.D",
+      "Description": "Ensure EBS snapshots are not publicly accessible",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.D",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure EBS snapshots are not publicly accessible"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "ec2_ebs_public_snapshot",
+          "name": "Ensure EBS Snapshots Are Not Publicly Shared",
+          "description": "Evaluates EBS snapshot sharing permissions to identify snapshots that are publicly accessible and could expose copied volume data.",
+          "service": "Amazon EC2",
+          "resource_type": "AWS::EC2::Snapshot",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.E",
+      "Description": "Ensure SNS topics do not allow global send or subscribe",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.E",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure SNS topics do not allow global send or subscribe"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "sns_topics_not_publicly_accessible",
+          "name": "Prevent Public Access to Amazon SNS Topics",
+          "description": "Evaluates the Amazon SNS topic against the benchmark objective “Ensure SNS topics do not allow global send or subscribe.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Amazon SNS",
+          "resource_type": "AWS::SNS::Topic",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.F",
+      "Description": "Ensure Redshift clusters do not have a public endpoint",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.F",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure Redshift clusters do not have a public endpoint"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "redshift_cluster_public_access",
+          "name": "Prevent Public Access to Amazon Redshift Clusters",
+          "description": "Evaluates the Amazon Redshift cluster against the benchmark objective “Ensure Redshift clusters do not have a public endpoint.” It helps identify configuration gaps that could weaken security configuration, exposure reduction, and control assurance.",
+          "service": "Amazon Redshift",
+          "resource_type": "AWS::Redshift::Cluster",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.G",
+      "Description": "Ensure RDS snapshots are not publicly accessible",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.G",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure RDS snapshots are not publicly accessible"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "rds_snapshots_public_access",
+          "name": "Prevent Public Access to RDS Snapshots",
+          "description": "Evaluates the Amazon RDS snapshot against the benchmark objective “Ensure RDS snapshots are not publicly accessible.” It helps identify configuration gaps that could weaken database confidentiality and availability.",
+          "service": "Amazon RDS",
+          "resource_type": "AWS::RDS::DBSnapshot",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.13.1.H",
+      "Description": "Ensure RDS instances are not accessible to the world.",
+      "Name": "Network Security Management",
+      "Attributes": [
+        {
+          "Category": "A.13 Communications Security",
+          "Objetive_ID": "A.13.1.H",
+          "Objetive_Name": "Network Security Management",
+          "Check_Summary": "Ensure RDS instances are not accessible to the world."
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "rds_instance_no_public_access",
+          "name": "Prevent Public Access to Amazon RDS Instances",
+          "description": "Checks whether Amazon RDS instances are configured without public accessibility, reducing direct internet exposure of database endpoints.",
+          "service": "Amazon RDS",
+          "resource_type": "AWS::RDS::DBInstance",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.A",
+      "Description": "Ensure IAM password policy expires passwords within 90 days or less",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.A",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM password policy expires passwords within 90 days or less"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_expires_passwords_within_90_days_or_less",
+          "name": "Require IAM Password Expiration Within 90 Days",
+          "description": "Checks whether the AWS IAM password policy requires password expiration within 90 days or less, supporting periodic credential renewal.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.B",
+      "Description": "Ensure IAM password policy prevents password reuse",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.B",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM password policy prevents password reuse"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_reuse_24",
+          "name": "Prevent Reuse of the Last 24 IAM Passwords",
+          "description": "Checks whether the IAM password policy prevents reuse of the previous 24 passwords, reducing the likelihood that a recently used credential is reused.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.C",
+      "Description": "Ensure IAM password policy requires minimum length of 14 or greater",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.C",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM password policy requires minimum length of 14 or greater"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_minimum_length_14",
+          "name": "Require IAM Passwords to Be at Least 14 Characters",
+          "description": "Checks whether the IAM password policy requires passwords to contain at least 14 characters.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.D",
+      "Description": "Ensure IAM password policy require at least one number",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.D",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM password policy require at least one number"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_number",
+          "name": "Require Numbers in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one numeric character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.E",
+      "Description": "Ensure IAM password policy require at least one symbol",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.E",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM password policy require at least one symbol"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_symbol",
+          "name": "Require Symbols in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one symbol in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.F",
+      "Description": "Ensure IAM password policy require at least one lowercase letter",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.F",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM password policy require at least one lowercase letter"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_lowercase",
+          "name": "Require Lowercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one lowercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.G",
+      "Description": "Ensure IAM password policy requires at least one uppercase letter",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.G",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM password policy requires at least one uppercase letter"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_uppercase",
+          "name": "Require Uppercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one uppercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.H",
+      "Description": "Avoid the use of the 'root' account",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.H",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Avoid the use of the 'root' account"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_avoid_root_usage",
+          "name": "Avoid Using the AWS Root User for Routine Tasks",
+          "description": "Evaluates the AWS account root identity and IAM account settings against the benchmark objective “Avoid the use of the 'root' account.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.I",
+      "Description": "Ensure IAM policies are attached only to groups or roles",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.I",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure IAM policies are attached only to groups or roles"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_policy_attached_only_to_group_or_roles",
+          "name": "Grant IAM User Permissions Through Groups or Roles",
+          "description": "Evaluates the IAM policy against the benchmark objective “Ensure IAM policies are attached only to groups or roles.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Policy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.J",
+      "Description": "Ensure multi-factor authentication (MFA) is enabled for all IAM users that have console access",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.J",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure multi-factor authentication (MFA) is enabled for all IAM users that have console access"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_user_mfa_enabled_console_access",
+          "name": "Require MFA for IAM Users with Console Access",
+          "description": "Checks whether IAM users who can sign in to the console are protected by multi-factor authentication.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.K",
+      "Description": "Ensure MFA is enabled for the 'root' account",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.K",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure MFA is enabled for the 'root' account"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_root_mfa_enabled",
+          "name": "Require MFA for the AWS Root User",
+          "description": "Checks whether MFA protects the AWS root identity, adding a second authentication factor to the account's most privileged identity.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.L",
+      "Description": "Ensure access keys are rotated every 90 days or less",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.L",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure access keys are rotated every 90 days or less"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_rotate_access_key_90_days",
+          "name": "Rotate IAM Access Keys Within 90 Days",
+          "description": "Evaluates the IAM user against the benchmark objective “Ensure access keys are rotated every 90 days or less.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.M",
+      "Description": "Ensure credentials unused for 90 days or greater are disabled",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.M",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure credentials unused for 90 days or greater are disabled"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_role_access_not_stale_to_bedrock",
+          "name": "Identify Stale IAM Role Access to Amazon Bedrock",
+          "description": "Identifies IAM role access associated with Amazon Bedrock that may be stale or no longer required, so permissions can be reviewed and removed when appropriate.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Role",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_access_not_stale_to_bedrock",
+          "name": "Identify Stale IAM User Access to Amazon Bedrock",
+          "description": "Identifies stale IAM user access associated with Amazon Bedrock for review, helping remove permissions that are no longer needed.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_access_not_stale_to_sagemaker",
+          "name": "Identify Stale IAM User Access to Amazon SageMaker",
+          "description": "Identifies stale IAM user access associated with Amazon SageMaker for review, helping remove permissions that are no longer needed.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_accesskey_unused",
+          "name": "Disable or Remove Unused IAM Access Keys",
+          "description": "Checks IAM access-key activity to identify keys that have not been used within the applicable period and should be disabled or removed after validation.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_console_access_unused",
+          "name": "Disable Unused IAM Console Credentials",
+          "description": "Checks console credential usage to identify IAM users with unused interactive access that should be reviewed and disabled when no longer required.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ],
+      "ConfigRequirements": [
+        {
+          "Check": "iam_user_accesskey_unused",
+          "ConfigKey": "max_unused_access_keys_days",
+          "Operator": "lte",
+          "Value": 90
+        },
+        {
+          "Check": "iam_user_console_access_unused",
+          "ConfigKey": "max_console_access_days",
+          "Operator": "lte",
+          "Value": 90
+        },
+        {
+          "Check": "iam_user_access_not_stale_to_bedrock",
+          "ConfigKey": "max_unused_bedrock_access_days",
+          "Operator": "lte",
+          "Value": 90
+        },
+        {
+          "Check": "iam_role_access_not_stale_to_bedrock",
+          "ConfigKey": "max_unused_bedrock_access_days",
+          "Operator": "lte",
+          "Value": 90
+        },
+        {
+          "Check": "iam_user_access_not_stale_to_sagemaker",
+          "ConfigKey": "max_unused_sagemaker_access_days",
+          "Operator": "lte",
+          "Value": 90
+        }
+      ]
+    },
+    {
+      "Id": "A.9.2.N",
+      "Description": "Ensure no root account access key exists",
+      "Name": "User Access Management",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.2.N",
+          "Objetive_Name": "User Access Management",
+          "Check_Summary": "Ensure no root account access key exists"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_no_root_access_key",
+          "name": "Ensure the AWS Root User Has No Access Keys",
+          "description": "Checks whether the AWS root identity has active programmatic access keys, which can provide highly privileged access outside normal role-based controls.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.A",
+      "Description": "Ensure IAM password policy expires passwords within 90 days or less",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.A",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure IAM password policy expires passwords within 90 days or less"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_expires_passwords_within_90_days_or_less",
+          "name": "Require IAM Password Expiration Within 90 Days",
+          "description": "Checks whether the AWS IAM password policy requires password expiration within 90 days or less, supporting periodic credential renewal.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.B",
+      "Description": "Ensure IAM password policy prevents password reuse",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.B",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure IAM password policy prevents password reuse"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_reuse_24",
+          "name": "Prevent Reuse of the Last 24 IAM Passwords",
+          "description": "Checks whether the IAM password policy prevents reuse of the previous 24 passwords, reducing the likelihood that a recently used credential is reused.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.C",
+      "Description": "Ensure IAM password policy requires minimum length of 14 or greater",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.C",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure IAM password policy requires minimum length of 14 or greater"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_minimum_length_14",
+          "name": "Require IAM Passwords to Be at Least 14 Characters",
+          "description": "Checks whether the IAM password policy requires passwords to contain at least 14 characters.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.D",
+      "Description": "Ensure IAM password policy require at least one number",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.D",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure IAM password policy require at least one number"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_number",
+          "name": "Require Numbers in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one numeric character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.E",
+      "Description": "Ensure IAM password policy require at least one symbol",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.E",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure IAM password policy require at least one symbol"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_symbol",
+          "name": "Require Symbols in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one symbol in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.F",
+      "Description": "Ensure IAM password policy require at least one lowercase letter",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.F",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure IAM password policy require at least one lowercase letter"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_lowercase",
+          "name": "Require Lowercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one lowercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.G",
+      "Description": "Ensure IAM password policy requires at least one uppercase letter",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.G",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure IAM password policy requires at least one uppercase letter"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_uppercase",
+          "name": "Require Uppercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one uppercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.H",
+      "Description": "Ensure multi-factor authentication (MFA) is enabled for all IAM users that have console access",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.H",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure multi-factor authentication (MFA) is enabled for all IAM users that have console access"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_user_mfa_enabled_console_access",
+          "name": "Require MFA for IAM Users with Console Access",
+          "description": "Checks whether IAM users who can sign in to the console are protected by multi-factor authentication.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.I",
+      "Description": "Ensure access keys are rotated every 90 days or less",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.I",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure access keys are rotated every 90 days or less"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_rotate_access_key_90_days",
+          "name": "Rotate IAM Access Keys Within 90 Days",
+          "description": "Evaluates the IAM user against the benchmark objective “Ensure access keys are rotated every 90 days or less.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.3.J",
+      "Description": "Ensure credentials unused for 90 days or greater are disabled",
+      "Name": "User Responsibilities",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.3.J",
+          "Objetive_Name": "User Responsibilities",
+          "Check_Summary": "Ensure credentials unused for 90 days or greater are disabled"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_user_accesskey_unused",
+          "name": "Disable or Remove Unused IAM Access Keys",
+          "description": "Checks IAM access-key activity to identify keys that have not been used within the applicable period and should be disabled or removed after validation.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_console_access_unused",
+          "name": "Disable Unused IAM Console Credentials",
+          "description": "Checks console credential usage to identify IAM users with unused interactive access that should be reviewed and disabled when no longer required.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ],
+      "ConfigRequirements": [
+        {
+          "Check": "iam_user_accesskey_unused",
+          "ConfigKey": "max_unused_access_keys_days",
+          "Operator": "lte",
+          "Value": 90
+        },
+        {
+          "Check": "iam_user_console_access_unused",
+          "ConfigKey": "max_console_access_days",
+          "Operator": "lte",
+          "Value": 90
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.A",
+      "Description": "Ensure IAM password policy expires passwords within 90 days or less",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.A",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM password policy expires passwords within 90 days or less"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_expires_passwords_within_90_days_or_less",
+          "name": "Require IAM Password Expiration Within 90 Days",
+          "description": "Checks whether the AWS IAM password policy requires password expiration within 90 days or less, supporting periodic credential renewal.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.B",
+      "Description": "Ensure IAM password policy prevents password reuse",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.B",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM password policy prevents password reuse"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_reuse_24",
+          "name": "Prevent Reuse of the Last 24 IAM Passwords",
+          "description": "Checks whether the IAM password policy prevents reuse of the previous 24 passwords, reducing the likelihood that a recently used credential is reused.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.C",
+      "Description": "Ensure IAM password policy requires minimum length of 14 or greater",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.C",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM password policy requires minimum length of 14 or greater"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_minimum_length_14",
+          "name": "Require IAM Passwords to Be at Least 14 Characters",
+          "description": "Checks whether the IAM password policy requires passwords to contain at least 14 characters.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.D",
+      "Description": "Ensure IAM password policy require at least one number",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.D",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM password policy require at least one number"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_number",
+          "name": "Require Numbers in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one numeric character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.E",
+      "Description": "Ensure IAM password policy require at least one symbol",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.E",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM password policy require at least one symbol"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_symbol",
+          "name": "Require Symbols in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one symbol in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.F",
+      "Description": "Ensure IAM password policy require at least one lowercase letter",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.F",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM password policy require at least one lowercase letter"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_lowercase",
+          "name": "Require Lowercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one lowercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.G",
+      "Description": "Ensure IAM password policy requires at least one uppercase letter",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.G",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM password policy requires at least one uppercase letter"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_password_policy_uppercase",
+          "name": "Require Uppercase Characters in IAM Passwords",
+          "description": "Checks whether the IAM password policy requires at least one uppercase character in each password.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::PasswordPolicy",
+          "severity": "Medium"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.H",
+      "Description": "Avoid the use of the 'root' account",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.H",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Avoid the use of the 'root' account"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_avoid_root_usage",
+          "name": "Avoid Using the AWS Root User for Routine Tasks",
+          "description": "Evaluates the AWS account root identity and IAM account settings against the benchmark objective “Avoid the use of the 'root' account.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.I",
+      "Description": "Ensure IAM policies are attached only to groups or roles",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.I",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure IAM policies are attached only to groups or roles"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_policy_attached_only_to_group_or_roles",
+          "name": "Grant IAM User Permissions Through Groups or Roles",
+          "description": "Evaluates the IAM policy against the benchmark objective “Ensure IAM policies are attached only to groups or roles.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Policy",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.J",
+      "Description": "Ensure multi-factor authentication (MFA) is enabled for all IAM users that have console access",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.J",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure multi-factor authentication (MFA) is enabled for all IAM users that have console access"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_user_mfa_enabled_console_access",
+          "name": "Require MFA for IAM Users with Console Access",
+          "description": "Checks whether IAM users who can sign in to the console are protected by multi-factor authentication.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.K",
+      "Description": "Ensure MFA is enabled for the 'root' account",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.K",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure MFA is enabled for the 'root' account"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_root_mfa_enabled",
+          "name": "Require MFA for the AWS Root User",
+          "description": "Checks whether MFA protects the AWS root identity, adding a second authentication factor to the account's most privileged identity.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.L",
+      "Description": "Ensure access keys are rotated every 90 days or less",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.L",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure access keys are rotated every 90 days or less"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_rotate_access_key_90_days",
+          "name": "Rotate IAM Access Keys Within 90 Days",
+          "description": "Evaluates the IAM user against the benchmark objective “Ensure access keys are rotated every 90 days or less.” It helps identify configuration gaps that could weaken identity security and least-privilege enforcement.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.M",
+      "Description": "Ensure credentials unused for 90 days or greater are disabled",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.M",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure credentials unused for 90 days or greater are disabled"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_user_accesskey_unused",
+          "name": "Disable or Remove Unused IAM Access Keys",
+          "description": "Checks IAM access-key activity to identify keys that have not been used within the applicable period and should be disabled or removed after validation.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        },
+        {
+          "check_id": "iam_user_console_access_unused",
+          "name": "Disable Unused IAM Console Credentials",
+          "description": "Checks console credential usage to identify IAM users with unused interactive access that should be reviewed and disabled when no longer required.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::User",
+          "severity": "High"
+        }
+      ],
+      "ConfigRequirements": [
+        {
+          "Check": "iam_user_accesskey_unused",
+          "ConfigKey": "max_unused_access_keys_days",
+          "Operator": "lte",
+          "Value": 90
+        },
+        {
+          "Check": "iam_user_console_access_unused",
+          "ConfigKey": "max_console_access_days",
+          "Operator": "lte",
+          "Value": 90
+        }
+      ]
+    },
+    {
+      "Id": "A.9.4.N",
+      "Description": "Ensure no root account access key exists",
+      "Name": "System and Application Access Control",
+      "Attributes": [
+        {
+          "Category": "A.9 Access Control",
+          "Objetive_ID": "A.9.4.N",
+          "Objetive_Name": "System and Application Access Control",
+          "Check_Summary": "Ensure no root account access key exists"
+        }
+      ],
+      "Checks": [
+        {
+          "check_id": "iam_no_root_access_key",
+          "name": "Ensure the AWS Root User Has No Access Keys",
+          "description": "Checks whether the AWS root identity has active programmatic access keys, which can provide highly privileged access outside normal role-based controls.",
+          "service": "AWS IAM",
+          "resource_type": "AWS::IAM::Account",
+          "severity": "High"
+        }
+      ]
+    }
+  ]
+}
